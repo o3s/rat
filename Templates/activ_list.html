@@ -1,0 +1,58 @@
+{% extends "Templates/base.html" %}
+{% block content %}
+<section class="content">
+            
+          <!-- Your Page Content Here -->
+    {% for activ in activs %}
+        <div class="row">
+            <div class="col-md-1">
+                <a href="/activ/{{ activ.id }}">
+                    {{ activ.name }}
+                </a>
+            </div>
+            <div class="col-md-1">
+                {{ activ.types }}
+            </div>
+            <div class="col-md-3">
+                {{ activ.desc }}
+            </div>
+            <div class="col-md-1">
+                {{ activ.owner }}
+            </div>
+            <div class="col-md-1">
+                {{ activ.location }}
+            </div>
+            <div class="col-md-1">
+                {{ activ.rating_c }}
+            </div>
+            <div class="col-md-1">
+                {{ activ.rating_i }}
+            </div>
+            <div class="col-md-1">
+                {{ activ.rating_a }}
+            </div>
+        </div>
+    {% endfor %}
+<!-- Пагинатор для активов -->
+  <div class="pagination">
+    <span class="step-links">
+       {% if activs.has_previous %}
+            <a href="?Стр.={{ activs.previous_page_number }}">Предыдущая</a>
+       {% endif %}
+
+       <span class="current">
+            Page {{ activs.number }} of {{ activs.paginator.num_pages }}.
+       </span>
+        {% if activs.has_next %}
+            <a href="?Стр.={{ activs.next_page_number }}">Следующая</a>
+        {% endif %}
+    </span>
+  </div>
+           <!-- Кнопка создать актив -->  
+  <form >
+      <p><button formaction= "/activ/add" class="btn btn-primary">Создать актив</button></p>
+  </form>
+
+</section><!-- /.content -->
+  </div><!-- /.content-wrapper -->
+{% endblock content %} 
