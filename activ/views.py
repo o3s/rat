@@ -12,11 +12,12 @@ from django.views.generic.edit import UpdateView
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.views.generic.edit import DeleteView
+from django.core.urlresolvers import reverse_lazy
 # Список активов
 def activ_list(request):
-    activ = Activ.objects.all()
-    paginator = Paginator(activ, 50)
+    activ = ActivFilter(request.GET, queryset=Activ.objects.all())
+    paginator = Paginator(activ, 5)
     page = request.GET.get('page')
     try:
         activs= paginator.page(page)

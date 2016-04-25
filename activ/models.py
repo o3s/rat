@@ -3,57 +3,74 @@ from django import forms
 from django.db import models
 from django.forms import ModelForm
 from django.core.urlresolvers import reverse
+import django_filters
+from django_filters import filters
+
 # Create your models here.
 
 class Types(models.Model):
-    #class Meta():
-        #db_table = 'activ_type'
-        #app_label = 'activ'
-    types = models.CharField(max_length=250, verbose_name ='Типы активов')
+    TYPES_CHOICES=(
+        (0, u'Бумажный документ'),
+        (1, u'Электронный документ'),
+        (2, u'Физический сервер'),
+        (3, u'Виртуальный сервер'),
+        (4, u'Канал связи'),
+        (5, u'Мобильное устройство'),
+        (6, u'Ноутбук'),
+        (7, u'Оборудование'),
+        (8, u'Персонал'),
+        (9, u'Помещение'),
+        (10, u'Печатающее устройство'),
+        (11, u'Программный'),
+        (12, u'Сервис'),
+        (13, u'Сетевое оборудование'),
+        (14, u'Сканер'),
+        (15, u'Стационарный компьютер'),
+        (16, u'Факс'),
+        (17, u'Электронынй носитель'),
+        (18, u'IP телефония'),
+        )
+    types = models.IntegerField(verbose_name ='Типы активов', choices=TYPES_CHOICES)
     def __str__(self):
         return '%s' % self.types
     
     class Meta:
+        ordering = ('types',)
         verbose_name = "Тип актива"
         verbose_name_plural = "Типы активов"
 
 
 class Rating_c(models.Model):
-    #class Meta():
-        #db_table =  'rating_c'
-        #app_label = 'activ'
+  
     rating = models.CharField(max_length=100, verbose_name ='Оценка конфиденциальности')
     value = models.IntegerField(default=0, verbose_name ='Значение')
     def __str__(self):
         return '%s' % self.rating
     
     class Meta:
+        ordering = ('value',)
         verbose_name = "Конфиденциальность"
         verbose_name_plural = "Конфиденциальность"
 
 
 class Rating_i(models.Model):
-    #class Meta():
-       # db_table =  'rating_i'
-       # app_label = 'activ'
     rating = models.CharField(max_length=100, verbose_name ='Оценка целостности')
     value = models.IntegerField(default=0, verbose_name ='Значение')
     def __str__(self):
         return '%s' % self.rating
     class Meta:
+        ordering = ('value',)
         verbose_name = "Целостность"
         verbose_name_plural = "Целостность"
         
 class Rating_a(models.Model):
-    #class Meta():
-        #db_table =  'rating_a'
-        #app_label = 'activ'
     rating = models.CharField(max_length=100, verbose_name ='Оценка доступности')
     value = models.IntegerField(default=0, verbose_name ='Значение')
     def __str__(self):
         return '%s' % self.rating
-        
+
     class Meta:
+        ordering = ('value',)
         verbose_name = "Доступность"
         verbose_name_plural = "Доступность"
     
@@ -93,6 +110,15 @@ class Activ (models.Model):
         verbose_name = "Актив"
         verbose_name_plural = "Активы"
         ordering = ["-created"]
-
+# фильтр актиовов пока не работает
+class ActivFilter(django_filters.FilterSet):
+    #name = MethodFilter(action='filter_name')
+    class Meta:
+        model = Activ
+        fields = ['name', 'desc', 'types', 'owner' ]
+    def filter_name(self, queryset, value):
+        return queryset.filter(
+            username=value
+        )
 
 

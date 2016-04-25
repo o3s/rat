@@ -1,39 +1,69 @@
 {% extends "Templates/base.html" %}
 {% block content %}
 <section class="content">
-            
-          <!-- Your Page Content Here -->
+  <div> <h2> Реестр активов</h2></div>
+  <table class="table table-striped">    
+     <thead>
+       <tr>
+         <th>Номер</th>
+         <th>Актив</th>
+         <th>Тип</th>
+         <th>Описание</th>
+         <th>Владелец</th>
+         <th>Местонахождение</th>
+         <th>Конфиденциальность</th>
+         <th>Целостность</th>\
+         <th>Доступность</th>
+    </tr>
+    </thead>
     {% for activ in activs %}
-        <div class="row">
-            <div class="col-md-1">
+    <tbody>
+    <tr>
+      <td><div class="col-md-1">
+                <a href="/activ/{{ activ.id }}">
+                    {{ activ.id }}
+                </a>
+           </div>
+      </td>
+      <td> <div class="col-md-1">
                 <a href="/activ/{{ activ.id }}">
                     {{ activ.name }}
                 </a>
-            </div>
-            <div class="col-md-1">
+           </div>
+      </td>
+      <td> <div class="col-md-1">
                 {{ activ.types }}
             </div>
-            <div class="col-md-3">
+      </td>
+      <td> <div class="col-md-3">
                 {{ activ.desc }}
-            </div>
-            <div class="col-md-1">
+            </div> 
+      </td>
+      <td> <div class="col-md-3">
                 {{ activ.owner }}
             </div>
-            <div class="col-md-1">
+      </td>
+      <td> <div class="col-md-1">
                 {{ activ.location }}
             </div>
-            <div class="col-md-1">
+      </td>
+      <td> <div class="col-md-1">
                 {{ activ.rating_c }}
             </div>
-            <div class="col-md-1">
+      </td>
+      <td> <div class="col-md-1">
                 {{ activ.rating_i }}
             </div>
-            <div class="col-md-1">
+      </td>
+      <td><div class="col-md-1">
                 {{ activ.rating_a }}
             </div>
-        </div>
+      </td>
+    </tr>
+    </tbody>
     {% endfor %}
-<!-- Пагинатор для активов -->
+  </table>
+
   <div class="pagination">
     <span class="step-links">
        {% if activs.has_previous %}
@@ -52,7 +82,7 @@
   <form >
       <p><button formaction= "/activ/add" class="btn btn-primary">Создать актив</button></p>
   </form>
-
+</div> 
 </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
 {% endblock content %} 

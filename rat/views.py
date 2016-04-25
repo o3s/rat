@@ -11,8 +11,8 @@ from django.forms import formset_factory
 
 # Create your views here.
 def activ_list(request):
-    activ = Activ.objects.all()
-    return render(request, 'Templates/activ_list.html', {'activ': activ})
+    filter = ActivFilter(request.GET, queryset=Activ.objects.all())
+    return render(request, 'Templates/activ_list.html', {'filter': filter})
 
 #Сождание актива
 def activ_add(request):
