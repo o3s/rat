@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^edit/(?P<activ_id>\d+)/$', activ_edit, {}, 'activ_edit'),
     url(r'^del/(?P<activ_id>\d+)/$', activ_del, {}, 'activ_del'),
     url(r'^(?P<activ_id>[0-9]+)$', activ_details, name='activ_details'),
+    url(r'^dash/$', activ_dash, name='activ_dash'),
     ]

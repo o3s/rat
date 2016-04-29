@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.http import Http404, HttpResponseForbidden
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import RequestContext
 from datetime import datetime
 from activ.models import *
@@ -14,18 +14,18 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import DeleteView
 from django.core.urlresolvers import reverse_lazy
+from django_tables2   import RequestConfig
+
+from chartit import DataPool, Chart
+from unit.analysis_funcs import ChartData
+
 # Список активов
 def activ_list(request):
-    activ = ActivFilter(request.GET, queryset=Activ.objects.all())
-    paginator = Paginator(activ, 5)
-    page = request.GET.get('page')
-    try:
-        activs= paginator.page(page)
-    except PageNotAnInteger:
-        activs= paginator.page(1)
-    except EmptyPage:
-        activs= paginator.page(paginator.num_pages)
-    return render(request, 'Templates/activ_list.html', {'activs': activs})
+    activ = Activ.objects.all()
+    table = ActivTable(activ)
+    RequestConfig(request).configure(table)
+    table.paginate(page=request.GET.get('page', 1), per_page=50)
+    return render(request, 'Templates/activ_list.html', {'table': table})
 
 # Детали одного актива
 def activ_details(request, activ_id):
@@ -62,3 +62,36 @@ def activ_del(request, activ_id=None):
     instance = get_object_or_404(Activ,  id= activ_id).delete()
     return redirect('activ:activ')
 	
+# Создание дашбордов
+def demo_piechart(request):
+    """
+    pieChart page
+    """
+    xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries",
+             "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
+    ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
+
+    color_list = ['#5d8aa8', '#e32636', '#efdecd', '#ffbf00', '#ff033e', '#a4c639',
+                  '#b2beb5', '#8db600', '#7fffd4', '#ff007f', '#ff55a3', '#5f9ea0']
+    extra_serie = {
+        "tooltip": {"y_start": "", "y_end": " cal"},
+        "color_list": color_list
+    }
+    chartdata = {'x': xdata, 'y1': ydata, 'extra1': extra_serie}
+    charttype = "pieChart"
+    chartcontainer = 'piechart_container'  # container name
+
+    data = {
+        'charttype': charttype,
+        'chartdata': chartdata,
+        'chartcontainer': chartcontainer,
+        'extra': {
+            'x_is_date': False,
+            'x_axis_format': '',
+            'tag_script_js': True,
+            'jquery_on_ready': False,
+        }
+    }
+    return render_to_response('piechart.html', data)
+    
+    

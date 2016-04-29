@@ -1,83 +1,8 @@
 {% extends "Templates/base.html" %}
+{% load django_tables2 %}
 {% block content %}
-<section class="content">
-  <div> <h2> Реестр активов</h2></div>
-  <table class="table table-striped">    
-     <thead>
-       <tr>
-         <th>Номер</th>
-         <th>Актив</th>
-         <th>Тип</th>
-         <th>Описание</th>
-         <th>Владелец</th>
-         <th>Местонахождение</th>
-         <th>Конфиденциальность</th>
-         <th>Целостность</th>\
-         <th>Доступность</th>
-    </tr>
-    </thead>
-    {% for activ in activs %}
-    <tbody>
-    <tr>
-      <td><div class="col-md-1">
-                <a href="/activ/{{ activ.id }}">
-                    {{ activ.id }}
-                </a>
-           </div>
-      </td>
-      <td> <div class="col-md-1">
-                <a href="/activ/{{ activ.id }}">
-                    {{ activ.name }}
-                </a>
-           </div>
-      </td>
-      <td> <div class="col-md-1">
-                {{ activ.types }}
-            </div>
-      </td>
-      <td> <div class="col-md-3">
-                {{ activ.desc }}
-            </div> 
-      </td>
-      <td> <div class="col-md-3">
-                {{ activ.owner }}
-            </div>
-      </td>
-      <td> <div class="col-md-1">
-                {{ activ.location }}
-            </div>
-      </td>
-      <td> <div class="col-md-1">
-                {{ activ.rating_c }}
-            </div>
-      </td>
-      <td> <div class="col-md-1">
-                {{ activ.rating_i }}
-            </div>
-      </td>
-      <td><div class="col-md-1">
-                {{ activ.rating_a }}
-            </div>
-      </td>
-    </tr>
-    </tbody>
-    {% endfor %}
-  </table>
 
-  <div class="pagination">
-    <span class="step-links">
-       {% if activs.has_previous %}
-            <a href="?Стр.={{ activs.previous_page_number }}">Предыдущая</a>
-       {% endif %}
-
-       <span class="current">
-            Page {{ activs.number }} of {{ activs.paginator.num_pages }}.
-       </span>
-        {% if activs.has_next %}
-            <a href="?Стр.={{ activs.next_page_number }}">Следующая</a>
-        {% endif %}
-    </span>
-  </div>
+{% render_table table %}
            <!-- Кнопка создать актив -->  
   <form >
       <p><button formaction= "/activ/add" class="btn btn-primary">Создать актив</button></p>

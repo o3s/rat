@@ -14,8 +14,13 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+# добавил для bovera
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'djangobower.finders.BowerFinder',
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -40,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'activ',
     'main',
+    'django_tables2',
+    'djangobower',
     #'django_admin_bootstrapped.bootstrap3',
 ]
 
@@ -127,3 +134,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "Templates/dist"),
     '/home/ubuntu/workspace/Templates/dist',
 ]
+
+
+# Django-bower
+# ------------
+
+# Specifie path to components root (you need to use absolute path)
+BOWER_COMPONENTS_ROOT = '/home/ubuntu/workspace/Templates/static/'
+
+BOWER_PATH ='/usr/local/lib/python3.4/dist-packagespython manage.py bower_install'
+
+BOWER_INSTALLED_APPS = (
+    'd3#3.3.13',
+    'nvd3#1.7.1',
+)

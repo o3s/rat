@@ -5,6 +5,8 @@ from django.forms import ModelForm
 from django.core.urlresolvers import reverse
 import django_filters
 from django_filters import filters
+import django_tables2 as tables
+from django_tables2.utils import A
 
 # Create your models here.
 
@@ -90,7 +92,7 @@ class Activ (models.Model):
     #class Meta():
        # db_table = 'activ'
         #app_label = 'activ'
-    name = models.CharField(max_length=250, verbose_name ='Имя актива')
+    name = models.CharField(max_length=250, verbose_name ='Актив')
     desc = models.TextField(verbose_name ='Описание актива')
     types = models.ForeignKey(Types, verbose_name ='Тип актива')
     owner = models.CharField(max_length=200, verbose_name ='Владелец актива')
@@ -98,7 +100,7 @@ class Activ (models.Model):
     rating_i = models.ForeignKey(Rating_i, verbose_name ='Целостность')
     rating_a = models.ForeignKey(Rating_a, verbose_name ='Доступность')
     location = models.ForeignKey(Location, verbose_name ='Местоположение')
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name ='Создан')
     
     #def get_absolute_url(self):
         #from django.core.urlresolvers import reverse
@@ -110,15 +112,14 @@ class Activ (models.Model):
         verbose_name = "Актив"
         verbose_name_plural = "Активы"
         ordering = ["-created"]
-# фильтр актиовов пока не работает
-class ActivFilter(django_filters.FilterSet):
-    #name = MethodFilter(action='filter_name')
+
+
+# класс для создания таблицы через django_tables2
+class ActivTable(tables.Table):
+    name = tables.LinkColumn("activ:activ_details", args=[A('id')])
     class Meta:
         model = Activ
-        fields = ['name', 'desc', 'types', 'owner' ]
-    def filter_name(self, queryset, value):
-        return queryset.filter(
-            username=value
-        )
+        fields = ("id","name","desc","types","owner","rating_c","rating_i","rating_a","location",)
+        attrs = {"class":"table table-striped"}
 
 
