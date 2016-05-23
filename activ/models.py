@@ -28,9 +28,8 @@ class Types(models.Model):
         (13, u'Сетевое оборудование'),
         (14, u'Сканер'),
         (15, u'Стационарный компьютер'),
-        (16, u'Факс'),
-        (17, u'Электронынй носитель'),
-        (18, u'IP телефония'),
+        (16, u'Телефония'),
+        (17, u'Электронный носитель'),
         )
     types = models.IntegerField(verbose_name ='Типы активов', choices=TYPES_CHOICES)
     def __str__(self):
@@ -87,7 +86,8 @@ class Location (models.Model):
     class Meta:
         verbose_name = "Местоположение"
         verbose_name_plural = "Местоположение"
-    
+
+
 class Activ (models.Model):
     #class Meta():
        # db_table = 'activ'
@@ -101,6 +101,10 @@ class Activ (models.Model):
     rating_a = models.ForeignKey(Rating_a, verbose_name ='Доступность')
     location = models.ForeignKey(Location, verbose_name ='Местоположение')
     created = models.DateTimeField(auto_now_add=True, verbose_name ='Создан')
+    def _get_total(self):
+       "Returns the total"
+       return Rating_a.value+Rating_c.value+Rating_i.value
+    total = property(_get_total) 
     
     #def get_absolute_url(self):
         #from django.core.urlresolvers import reverse

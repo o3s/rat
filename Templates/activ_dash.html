@@ -1,6 +1,21 @@
 {% extends "Templates/base.html" %}
 {% block content %}
-{% load chartit %}
-{{ weatherchart|load_charts:"container" }}
-<div id='container'> Chart will be rendered here </div>
+{% load nvd3_tags %}
+{% include_chart_jscss %}
+    
+    {% load_chart charttype chartdata chartcontainer extra %}
+    
+    <h3>Статистика активов</h3>
+    {% include_container chartcontainer %}
+    
+    {% load_chart charttype1 chartdata1 chartcontainer1 extra1 %}
+    <h3>Топ 5 владельцев активов</h3>
+    {% include_container chartcontainer1 %}
+    
+    
+    {% load_chart charttype2 chartdata2 chartcontainer2 extra2 %}
+    <h3>Статистика размещения актива</h3>
+    {% include_container chartcontainer2 %}
+
+
 {% endblock content %} 

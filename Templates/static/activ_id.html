@@ -1,0 +1,62 @@
+{% extends "Templates/base.html" %}
+{% block content %}
+
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Описание актива
+            <small>{{active.desc}}</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+          </ol>
+        </section>
+        
+        <!-- Main content -->
+  <section class="content">
+            
+     <!-- Your Page Content Here -->
+          
+  <div class="row">
+       <div class="col-md-1">
+           {{ activ.name }}
+       </div>
+       <div class="col-md-1">
+           {{activ.types }}
+       </div>
+       <div class="col-md-3">
+           {{ activ.desc }}
+       </div>
+       <div class="col-md-1">
+           {{ activ.owner }}
+       </div>
+       <div class="col-md-1">
+           {{activ.location}}
+       </div>
+       <div class="col-md-1">
+           {{activ.group}}
+       </div>
+       <div class="col-md-1">
+           {{ activ.rating_c }}
+       </div>
+       <div class="col-md-1">
+           {{activ.rating_i }}
+       </div>
+       <div class="col-md-1">
+           {{activ.rating_a }}
+       </div>
+  </div>
+     
+         <!-- Кнопка редактировать актив -->
+   <form >
+      <p><button formaction= "/activ/edit/{{activ.id}}/" class="btn btn-primary">Редактировать актив</button></p>
+   </form>
+       <!-- Кнопка удаления актива -->  
+  <form >
+      <p><button formaction= "/activ/del/{{activ.id}}/" class="btn btn-danger">Удалить актив</button></p>
+  </form>  
+  </section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+{% endblock content %} 

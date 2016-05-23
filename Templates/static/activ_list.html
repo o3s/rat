@@ -1,0 +1,13 @@
+{% extends "Templates/base.html" %}
+{% load django_tables2 %}
+{% block content %}
+
+{% render_table table %}
+           <!-- Кнопка создать актив -->  
+  <form >
+      <p><button formaction= "/activ/add" class="btn btn-primary">Создать актив</button></p>
+  </form>
+</div> 
+</section><!-- /.content -->
+  </div><!-- /.content-wrapper -->
+{% endblock content %} 

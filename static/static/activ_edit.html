@@ -1,0 +1,29 @@
+{% extends "Templates/base.html" %}
+{% block content %}
+{% load staticfiles %}  
+  <section class="content-header">
+      <h1>
+        Редактирование актива {{active.id}}
+        <small>{{active.desc}}</small>
+       </h1>
+       <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+          <li class="active">Here</li>
+       </ol>
+  </section>
+
+      <!-- Main content  -->
+       <!-- Редактирование актива  -->
+  <section class="content">
+       <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+          {{ form.as_p }}
+          <input type='submit' class='btn btn-primary' value='Сохранить' />
+          </form>
+     </br>
+     <!-- Кнопка удаления актива -->  
+  <form >
+      <p><button formaction= "/activ/del/{{activ.id}}/" class="btn btn-danger">Удалить актив</button></p>
+  </form>  
+        
+   </section><!-- /.content -->
+{% endblock content %}

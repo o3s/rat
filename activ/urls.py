@@ -5,6 +5,7 @@ from .views import (
     activ_add,
     activ_edit,
     activ_del,
+    activ_dash,
     )
 
 

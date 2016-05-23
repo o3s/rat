@@ -1,0 +1,12 @@
+{% extends "Templates/base.html" %}
+{% block content %}
+{% load nvd3_tags %}
+
+    {% include_chart_jscss %}
+    {% load_chart charttype chartdata chartcontainer extra %}
+    <h3>Статистика активов</h3>
+    {% include_container chartcontainer %}
+    {% include_container chartcontainer1 %}
+
+
+{% endblock content %} 

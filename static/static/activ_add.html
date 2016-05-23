@@ -1,0 +1,29 @@
+{% extends "Templates/base.html" %}
+{% block content %}
+
+        <!-- Content Header (Page header) -->
+<section class="content-header">
+   <h1>
+       Создать актив
+       <small>{{active.desc}}</small>
+   </h1>
+       <ol class="breadcrumb">
+         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+         <li class="active">Here</li>
+       </ol>
+</section>
+
+        <!-- Main content -->
+   <section class="content">
+            
+          <!-- Your Page Content Here -->
+            
+     <form action="/activ/add/" method="post">
+         {% csrf_token %}
+         {{  form.as_p }}
+         <button type="submit" class="btn btn-primary" >Сохранить</button>
+     </form>
+
+    </section><!-- /.content -->
+
+{% endblock content %}           
